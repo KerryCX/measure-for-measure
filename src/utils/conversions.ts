@@ -1,4 +1,4 @@
-import type { HeightValue, WeightValue } from "../types";
+import type { HeightUnit, HeightValue, WeightValue } from "../types";
 import {
   CM_PER_FOOT,
   CM_PER_INCH,
@@ -7,6 +7,9 @@ import {
   LB_PER_KG,
   LB_PER_STONE,
 } from "../constants";
+
+const roundTo1dp = (value: number): number => Math.round(value * 10) / 10;
+const roundTo3dp = (value: number): number => Math.round(value * 1000) / 1000;
 
 export const convertWeightToKg = (weight: WeightValue): number => {
   switch (weight.unit) {
@@ -42,13 +45,13 @@ export const convertKgToWeight = (
 ): WeightValue => {
   switch (targetUnit) {
     case "kg":
-      return { unit: "kg", primary: kg };
+      return { unit: "kg", primary: roundTo1dp(kg) };
     case "lbs":
-      return { unit: "lbs", primary: kg * LB_PER_KG };
+      return { unit: "lbs", primary: roundTo1dp(kg * LB_PER_KG) };
     case "st+lbs": {
       const totalLbs = kg * LB_PER_KG;
       const stone = Math.floor(totalLbs / LB_PER_STONE);
-      const lbs = totalLbs % LB_PER_STONE;
+      const lbs = roundTo1dp(totalLbs % LB_PER_STONE);
       return { unit: "st+lbs", primary: stone, secondary: lbs };
     }
   }
@@ -56,22 +59,22 @@ export const convertKgToWeight = (
 
 export const convertCmToHeight = (
   cm: number,
-  targetUnit: HeightValue["unit"],
+  targetUnit: HeightUnit,
 ): HeightValue => {
   switch (targetUnit) {
     case "cm":
-      return { unit: "cm", primary: cm };
+      return { unit: "cm", primary: roundTo1dp(cm) };
     case "m":
-      return { unit: "m", primary: cm / CM_PER_METRE };
+      return { unit: "m", primary: roundTo3dp(cm / CM_PER_METRE) };
     case "m+cm": {
       const metres = Math.floor(cm / CM_PER_METRE);
-      const remainingCm = cm % CM_PER_METRE;
+      const remainingCm = roundTo1dp(cm % CM_PER_METRE);
       return { unit: "m+cm", primary: metres, secondary: remainingCm };
     }
     case "ft+in": {
       const totalInches = cm / CM_PER_INCH;
       const feet = Math.floor(totalInches / 12);
-      const inches = totalInches % 12;
+      const inches = roundTo1dp(totalInches % 12);
       return { unit: "ft+in", primary: feet, secondary: inches };
     }
   }

@@ -52,7 +52,7 @@ describe("convertKgToWeight", () => {
   it("converts kg to lbs", () => {
     const result = convertKgToWeight(70, "lbs");
     expect(result.unit).toBe("lbs");
-    expect(result.primary).toBeCloseTo(154.32);
+    expect(result.primary).toBe(154.3);
   });
 
   it("converts kg to st+lbs", () => {
@@ -79,12 +79,11 @@ describe("convertCmToHeight", () => {
       secondary: 70,
     });
   });
-
   it("converts cm to ft+in", () => {
     const result = convertCmToHeight(170, "ft+in");
     expect(result.unit).toBe("ft+in");
     expect(result.primary).toBe(5);
-    expect(result.secondary).toBeCloseTo(6.93);
+    expect(result.secondary).toBe(6.9);
   });
 });
 

@@ -2,6 +2,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import UnitToggle from "./UnitToggle";
 import type { WeightUnit, WeightValue } from "../types";
+import { convertKgToWeight, convertWeightToKg } from "../utils";
 
 const WEIGHT_OPTIONS = [
   { value: "kg" as WeightUnit, label: "kg" },
@@ -16,7 +17,9 @@ interface WeightInputProps {
 
 const WeightInput = ({ value, onChange }: WeightInputProps) => {
   const handleUnitChange = (newUnit: WeightUnit) => {
-    onChange({ ...value, unit: newUnit });
+    const kg = convertWeightToKg(value);
+    const converted = convertKgToWeight(kg, newUnit);
+    onChange(converted);
   };
 
   const handlePrimaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {

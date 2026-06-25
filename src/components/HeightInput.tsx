@@ -2,6 +2,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import UnitToggle from "./UnitToggle";
 import type { HeightUnit, HeightValue } from "../types";
+import { convertCmToHeight, convertHeightToCm } from "../utils";
 
 const HEIGHT_OPTIONS = [
   { value: "cm" as HeightUnit, label: "cm" },
@@ -17,7 +18,9 @@ interface HeightInputProps {
 
 const HeightInput = ({ value, onChange }: HeightInputProps) => {
   const handleUnitChange = (newUnit: HeightUnit) => {
-    onChange({ ...value, unit: newUnit });
+    const cm = convertHeightToCm(value);
+    const converted = convertCmToHeight(cm, newUnit);
+    onChange(converted);
   };
 
   const handlePrimaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
