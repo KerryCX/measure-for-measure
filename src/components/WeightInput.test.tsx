@@ -8,15 +8,16 @@ const defaultValue: WeightValue = { unit: "kg", primary: 0 };
 describe("WeightInput", () => {
   it("renders a single input for kg", () => {
     render(<WeightInput value={defaultValue} onChange={() => {}} />);
-    expect(screen.getByLabelText("kg")).toBeInTheDocument();
-    expect(screen.queryByLabelText("lbs")).not.toBeInTheDocument();
+    expect(screen.getByRole("spinbutton")).toBeInTheDocument();
+    expect(screen.getByText("Kilograms")).toBeInTheDocument();
   });
 
   it("renders a single input for lbs", () => {
     render(
       <WeightInput value={{ unit: "lbs", primary: 0 }} onChange={() => {}} />,
     );
-    expect(screen.getByLabelText("lbs")).toBeInTheDocument();
+    expect(screen.getByRole("spinbutton")).toBeInTheDocument();
+    expect(screen.getByText("Pounds")).toBeInTheDocument();
   });
 
   it("renders two inputs for st+lbs", () => {
@@ -26,21 +27,21 @@ describe("WeightInput", () => {
         onChange={() => {}}
       />,
     );
-    expect(screen.getByLabelText("st")).toBeInTheDocument();
-    expect(screen.getByLabelText("lbs")).toBeInTheDocument();
+    const inputs = screen.getAllByRole("spinbutton");
+    expect(inputs).toHaveLength(2);
   });
 
   it("calls onChange when primary value changes", async () => {
     const handleChange = vi.fn();
     render(<WeightInput value={defaultValue} onChange={handleChange} />);
-    await userEvent.type(screen.getByLabelText("kg"), "70");
+    await userEvent.type(screen.getByRole("spinbutton"), "70");
     expect(handleChange).toHaveBeenCalled();
   });
 
   it("calls onChange when unit changes", async () => {
     const handleChange = vi.fn();
     render(<WeightInput value={defaultValue} onChange={handleChange} />);
-    await userEvent.click(screen.getByText("lbs"));
+    await userEvent.click(screen.getByText("Pounds"));
     expect(handleChange).toHaveBeenCalledWith({ unit: "lbs", primary: 0 });
   });
 
@@ -52,7 +53,8 @@ describe("WeightInput", () => {
         onChange={handleChange}
       />,
     );
-    await userEvent.type(screen.getByLabelText("lbs"), "4");
+    const inputs = screen.getAllByRole("spinbutton");
+    await userEvent.type(inputs[1], "4");
     expect(handleChange).toHaveBeenCalled();
   });
 });
