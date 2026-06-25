@@ -2,10 +2,11 @@ import { useState } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import UnitToggle from "./components/UnitToggle";
-import type { HeightUnit, WeightUnit } from "./types";
+import HeightInput from "./components/HeightInput";
+import type { HeightValue, WeightUnit } from "./types";
 
 const App = () => {
-  const [heightUnit, setHeightUnit] = useState<HeightUnit>("cm");
+  const [height, setHeight] = useState<HeightValue>({ unit: "cm", primary: 0 });
   const [weightUnit, setWeightUnit] = useState<WeightUnit>("kg");
 
   return (
@@ -17,16 +18,7 @@ const App = () => {
       <Typography variant='subtitle1' gutterBottom>
         Height
       </Typography>
-      <UnitToggle
-        value={heightUnit}
-        options={[
-          { value: "cm", label: "cm" },
-          { value: "m", label: "m" },
-          { value: "m+cm", label: "m+cm" },
-          { value: "ft+in", label: "ft+in" },
-        ]}
-        onChange={setHeightUnit}
-      />
+      <HeightInput value={height} onChange={setHeight} />
 
       <Typography variant='subtitle1' gutterBottom sx={{ mt: 3 }}>
         Weight
