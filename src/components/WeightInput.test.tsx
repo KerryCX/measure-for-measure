@@ -48,7 +48,7 @@ describe("WeightInput", () => {
     const handleChange = vi.fn();
     render(
       <WeightInput
-        value={{ unit: "st+lbs", primary: 11 }}
+        value={{ unit: "st+lbs", primary: 11, secondary: 0 }}
         onChange={handleChange}
       />,
     );

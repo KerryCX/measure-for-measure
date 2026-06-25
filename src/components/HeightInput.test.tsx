@@ -41,4 +41,16 @@ describe("HeightInput", () => {
     await userEvent.click(screen.getByText("m"));
     expect(handleChange).toHaveBeenCalledWith({ unit: "m", primary: 0 });
   });
+
+  it("calls onChange when secondary value changes for m+cm", async () => {
+    const handleChange = vi.fn();
+    render(
+      <HeightInput
+        value={{ unit: "m+cm", primary: 1 }}
+        onChange={handleChange}
+      />,
+    );
+    await userEvent.type(screen.getByLabelText("cm"), "70");
+    expect(handleChange).toHaveBeenCalled();
+  });
 });
