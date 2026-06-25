@@ -1,5 +1,6 @@
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import InputAdornment from "@mui/material/InputAdornment";
 import UnitToggle from "./UnitToggle";
 import type { HeightUnit, HeightValue } from "../types";
 import { convertCmToHeight, convertHeightToCm } from "../utils";
@@ -58,19 +59,31 @@ const HeightInput = ({ value, onChange }: HeightInputProps) => {
       />
       <Box sx={{ display: "flex", gap: 2, mt: 2, justifyContent: "center" }}>
         <TextField
-          label={primaryLabel}
           type='number'
           value={value.primary || ""}
           onChange={handlePrimaryChange}
           size='small'
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position='end'>{primaryLabel}</InputAdornment>
+              ),
+            },
+          }}
         />
         {isDouble && (
           <TextField
-            label={secondaryLabel}
             type='number'
-            value={value.secondary ?? ""}
+            value={value.secondary || ""}
             onChange={handleSecondaryChange}
             size='small'
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position='end'>{primaryLabel}</InputAdornment>
+                ),
+              },
+            }}
           />
         )}
       </Box>

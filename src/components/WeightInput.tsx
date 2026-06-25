@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import UnitToggle from "./UnitToggle";
 import type { WeightUnit, WeightValue } from "../types";
 import { convertKgToWeight, convertWeightToKg } from "../utils";
+import InputAdornment from "@mui/material/InputAdornment";
 
 const WEIGHT_OPTIONS = [
   {
@@ -55,19 +56,33 @@ const WeightInput = ({ value, onChange }: WeightInputProps) => {
       />
       <Box sx={{ display: "flex", gap: 2, mt: 2, justifyContent: "center" }}>
         <TextField
-          label={primaryLabel}
           type='number'
           value={value.primary || ""}
           onChange={handlePrimaryChange}
           size='small'
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position='end'>{primaryLabel}</InputAdornment>
+              ),
+            },
+          }}
         />
         {isDouble && (
           <TextField
-            label='lbs'
             type='number'
-            value={value.secondary ?? ""}
+            value={value.secondary || ""}
             onChange={handleSecondaryChange}
             size='small'
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    {value.secondary || ""}
+                  </InputAdornment>
+                ),
+              },
+            }}
           />
         )}
       </Box>

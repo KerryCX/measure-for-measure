@@ -7,8 +7,8 @@ const theme = createTheme({
       main: "#F5A623",
     },
     background: {
-      default: "#FFFFFF",
-      paper: "#FFFFFF",
+      default: "#FFFBF0",
+      paper: "#FFFBF0",
     },
   },
   shape: {
@@ -18,6 +18,16 @@ const theme = createTheme({
     fontFamily: "Inter, sans-serif",
   },
   components: {
+    MuiTypography: {
+      styleOverrides: {
+        h4: {
+          fontFamily: "Fraunces, serif",
+          fontWeight: 700,
+          fontSize: "2rem",
+          textAlign: "center",
+        },
+      },
+    },
     MuiToggleButton: {
       styleOverrides: {
         root: {
@@ -43,7 +53,7 @@ const theme = createTheme({
         grouped: {
           border: "1px solid #7A4E08 !important",
           color: "#7A4E08",
-          backgroundColor: "#FFFFFF",
+          backgroundColor: "#FFFBF0",
           "&.Mui-selected": {
             background: "#C04A1A",
             color: "#FFFFFF",

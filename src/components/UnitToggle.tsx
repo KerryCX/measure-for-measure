@@ -29,10 +29,21 @@ const UnitToggle = <T extends string>({
       onChange={handleChange}
       size='small'
       aria-label={ariaLabel}
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",
+        width: "100%",
+        gap: "8px",
+      }}
     >
       {options.map((option) => (
         <Tooltip key={option.value} title={option.tooltip} arrow>
-          <ToggleButton value={option.value}>{option.label}</ToggleButton>
+          <ToggleButton
+            value={option.value}
+            sx={{ flex: "1 1 calc(50% - 8px)", minWidth: 0 }}
+          >
+            {option.label}
+          </ToggleButton>
         </Tooltip>
       ))}
     </ToggleButtonGroup>
