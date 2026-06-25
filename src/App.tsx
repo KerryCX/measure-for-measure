@@ -3,11 +3,18 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import HeightInput from "./components/HeightInput";
 import WeightInput from "./components/WeightInput";
+import BMIResult from "./components/BMIResult";
 import type { HeightValue, WeightValue } from "./types";
+import { calculateBMI } from "./utils";
+import { convertHeightToCm, convertWeightToKg } from "./utils/conversions";
 
 const App = () => {
   const [height, setHeight] = useState<HeightValue>({ unit: "cm", primary: 0 });
   const [weight, setWeight] = useState<WeightValue>({ unit: "kg", primary: 0 });
+
+  const heightCm = convertHeightToCm(height);
+  const weightKg = convertWeightToKg(weight);
+  const result = calculateBMI(weightKg, heightCm);
 
   return (
     <Container maxWidth='sm' sx={{ py: 4 }}>
@@ -24,6 +31,8 @@ const App = () => {
         Weight
       </Typography>
       <WeightInput value={weight} onChange={setWeight} />
+
+      <BMIResult result={result} />
     </Container>
   );
 };
