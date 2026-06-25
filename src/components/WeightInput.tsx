@@ -5,9 +5,21 @@ import type { WeightUnit, WeightValue } from "../types";
 import { convertKgToWeight, convertWeightToKg } from "../utils";
 
 const WEIGHT_OPTIONS = [
-  { value: "kg" as WeightUnit, label: "kg" },
-  { value: "lbs" as WeightUnit, label: "lbs" },
-  { value: "st+lbs" as WeightUnit, label: "st+lbs" },
+  {
+    value: "kg" as WeightUnit,
+    label: "Kilograms",
+    tooltip: "e.g. 65 kg",
+  },
+  {
+    value: "lbs" as WeightUnit,
+    label: "Pounds",
+    tooltip: "e.g. 125 lbs",
+  },
+  {
+    value: "st+lbs" as WeightUnit,
+    label: "Stone & Pounds",
+    tooltip: "e.g. 9 st 4lbs",
+  },
 ];
 
 interface WeightInputProps {
@@ -36,11 +48,12 @@ const WeightInput = ({ value, onChange }: WeightInputProps) => {
   return (
     <Box>
       <UnitToggle
+        ariaLabel='Weight unit'
         value={value.unit}
         options={WEIGHT_OPTIONS}
         onChange={handleUnitChange}
       />
-      <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+      <Box sx={{ display: "flex", gap: 2, mt: 2, justifyContent: "center" }}>
         <TextField
           label={primaryLabel}
           type='number'

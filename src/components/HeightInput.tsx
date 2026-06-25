@@ -4,17 +4,29 @@ import UnitToggle from "./UnitToggle";
 import type { HeightUnit, HeightValue } from "../types";
 import { convertCmToHeight, convertHeightToCm } from "../utils";
 
-const HEIGHT_OPTIONS = [
-  { value: "cm" as HeightUnit, label: "cm" },
-  { value: "m" as HeightUnit, label: "m" },
-  { value: "m+cm" as HeightUnit, label: "m+cm" },
-  { value: "ft+in" as HeightUnit, label: "ft+in" },
-];
-
 interface HeightInputProps {
   value: HeightValue;
   onChange: (value: HeightValue) => void;
 }
+
+const HEIGHT_OPTIONS = [
+  {
+    value: "cm" as HeightUnit,
+    label: "Centimetres",
+    tooltip: "e.g. 150 cm",
+  },
+  { value: "m" as HeightUnit, label: "Metres", tooltip: "Metres (e.g. 1.6 m)" },
+  {
+    value: "m+cm" as HeightUnit,
+    label: "Metres & centimetres",
+    tooltip: "e.g. 1 m 66 cm",
+  },
+  {
+    value: "ft+in" as HeightUnit,
+    label: "Feet & inches",
+    tooltip: "e.g. 5 ft 5 in",
+  },
+];
 
 const HeightInput = ({ value, onChange }: HeightInputProps) => {
   const handleUnitChange = (newUnit: HeightUnit) => {
@@ -39,11 +51,12 @@ const HeightInput = ({ value, onChange }: HeightInputProps) => {
   return (
     <Box>
       <UnitToggle
+        ariaLabel='Height unit'
         value={value.unit}
         options={HEIGHT_OPTIONS}
         onChange={handleUnitChange}
       />
-      <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+      <Box sx={{ display: "flex", gap: 2, mt: 2, justifyContent: "center" }}>
         <TextField
           label={primaryLabel}
           type='number'

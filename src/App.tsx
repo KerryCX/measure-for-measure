@@ -7,6 +7,7 @@ import BMIResult from "./components/BMIResult";
 import type { HeightValue, WeightValue } from "./types";
 import { calculateBMI } from "./utils";
 import { convertHeightToCm, convertWeightToKg } from "./utils/conversions";
+import MeasureCard from "./components/MeasureCard";
 
 const App = () => {
   const [height, setHeight] = useState<HeightValue>({ unit: "cm", primary: 0 });
@@ -17,20 +18,16 @@ const App = () => {
   const result = calculateBMI(weightKg, heightCm);
 
   return (
-    <Container maxWidth='sm' sx={{ py: 4 }}>
+    <Container maxWidth='sm' component='main' sx={{ py: 4 }}>
       <Typography variant='h4' gutterBottom>
         Measure for Measure
       </Typography>
-
-      <Typography variant='subtitle1' gutterBottom>
-        Height
-      </Typography>
-      <HeightInput value={height} onChange={setHeight} />
-
-      <Typography variant='subtitle1' gutterBottom sx={{ mt: 3 }}>
-        Weight
-      </Typography>
-      <WeightInput value={weight} onChange={setWeight} />
+      <MeasureCard label='Height'>
+        <HeightInput value={height} onChange={setHeight} />
+      </MeasureCard>
+      <MeasureCard label='Weight'>
+        <WeightInput value={weight} onChange={setWeight} />
+      </MeasureCard>
 
       <BMIResult result={result} />
     </Container>
