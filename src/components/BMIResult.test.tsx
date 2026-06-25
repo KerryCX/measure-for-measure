@@ -6,14 +6,17 @@ import type { BMIResult as BMIResultType } from "../types";
 const normalResult: BMIResultType = { value: 24.2, category: "normal" };
 
 describe("BMIResult", () => {
-  it("renders nothing when result is null", () => {
-    const { container } = render(<BMIResult result={null} />);
-    expect(container).toBeEmptyDOMElement();
+  it("renders prompt when result is null", () => {
+    render(<BMIResult result={null} />);
+    expect(
+      screen.getByText("Enter a valid height and weight to see your BMI"),
+    ).toBeInTheDocument();
   });
 
   it("renders the BMI value", () => {
     render(<BMIResult result={normalResult} />);
-    expect(screen.getByText("BMI: 24.2")).toBeInTheDocument();
+    expect(screen.getByText("24.2")).toBeInTheDocument();
+    expect(screen.getByText("BMI")).toBeInTheDocument();
   });
 
   it("does not show category by default", () => {

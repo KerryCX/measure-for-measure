@@ -10,21 +10,29 @@ interface BMIResultProps {
   result: BMIResultType | null;
 }
 
+const cardSx = {
+  background: "linear-gradient(135deg, #F5D020, #F5A623, #F0652A)",
+  borderRadius: 3,
+  padding: 3,
+  mt: 1,
+  textAlign: "center",
+};
+
 const BMIResult = ({ result }: BMIResultProps) => {
   const [showCategory, setShowCategory] = useState(false);
 
-  if (!result) return null;
+  if (!result) {
+    return (
+      <Box sx={cardSx}>
+        <Typography variant='body1' sx={{ color: "#2D1A00", fontWeight: 600 }}>
+          Enter a valid height and weight to see your BMI
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
-    <Box
-      sx={{
-        background: "linear-gradient(135deg, #F5D020, #F5A623, #F0652A)",
-        borderRadius: 3,
-        padding: 3,
-        mt: 1,
-        textAlign: "center",
-      }}
-    >
+    <Box sx={cardSx}>
       <Typography
         variant='h3'
         sx={{
@@ -44,11 +52,7 @@ const BMIResult = ({ result }: BMIResultProps) => {
             checked={showCategory}
             onChange={(e) => setShowCategory(e.target.checked)}
             size='small'
-            slotProps={{
-              input: {
-                "aria-checked": showCategory,
-              },
-            }}
+            slotProps={{ input: { "aria-checked": showCategory } }}
           />
         }
         label='Show category'
