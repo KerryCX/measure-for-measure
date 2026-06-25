@@ -49,7 +49,6 @@ describe("WeightInput", () => {
         value={defaultValue}
         onChange={handleChange}
         onError={() => {}}
-        x
       />,
     );
     await userEvent.type(screen.getByRole("spinbutton"), "70");
