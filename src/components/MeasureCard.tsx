@@ -18,7 +18,13 @@ const MeasureCard = ({ label, children }: MeasureCardProps) => {
     >
       <Typography
         variant='h6'
-        sx={{ fontWeight: 700, color: "#2D1A00", mb: 2, textAlign: "center" }}
+        sx={{
+          fontFamily: "Fraunces, serif",
+          fontWeight: 700,
+          color: "#2D1A00",
+          mb: 2,
+          textAlign: "center",
+        }}
       >
         {label}
       </Typography>
