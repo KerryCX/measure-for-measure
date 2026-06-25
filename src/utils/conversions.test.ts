@@ -87,3 +87,21 @@ describe("convertCmToHeight", () => {
     expect(result.secondary).toBeCloseTo(6.93);
   });
 });
+
+describe("convertWeightToKg - missing secondary", () => {
+  it("converts st+lbs with no lbs value", () => {
+    expect(convertWeightToKg({ unit: "st+lbs", primary: 11 })).toBeCloseTo(
+      69.85,
+    );
+  });
+});
+
+describe("convertHeightToCm - missing secondary", () => {
+  it("converts m+cm with no cm value", () => {
+    expect(convertHeightToCm({ unit: "m+cm", primary: 1 })).toBe(100);
+  });
+
+  it("converts ft+in with no inches value", () => {
+    expect(convertHeightToCm({ unit: "ft+in", primary: 5 })).toBeCloseTo(152.4);
+  });
+});
