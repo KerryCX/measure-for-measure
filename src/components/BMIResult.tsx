@@ -13,7 +13,7 @@ interface BMIResultProps {
 const cardSx = {
   background: "#F5D020",
   borderRadius: 3,
-  padding: { xs: 1.5, sm: 3 },
+  padding: { xs: 0.75, sm: 3 },
   textAlign: "center",
   mt: { xs: 1, sm: 2 },
   maxWidth: 280,
@@ -48,7 +48,10 @@ const BMIResult = ({ result }: BMIResultProps) => {
       >
         {result.value}
       </Typography>
-      <Typography variant='subtitle2' sx={{ color: "#2D1A00", mb: 1 }}>
+      <Typography
+        variant='subtitle2'
+        sx={{ color: "#2D1A00", mb: { xs: 0.5, sm: 1 } }}
+      >
         BMI
       </Typography>
       <FormControlLabel

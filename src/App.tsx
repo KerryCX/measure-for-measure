@@ -75,7 +75,7 @@ const App = () => {
       maxWidth='sm'
       component='main'
       sx={{
-        py: { xs: 1, sm: 4 },
+        py: { xs: 0.75, sm: 4 },
         borderRadius: 4,
         mt: 2,
       }}
@@ -109,11 +109,11 @@ const App = () => {
           color: "#7A2E0E",
           border: "2px solid #7A2E0E",
           fontSize: "1.2rem",
-          maxWidth: 280,
+          width: "auto",
           fontWeight: 700,
           borderRadius: "999px",
-          py: 1.5,
-          mb: 2,
+          py: { xs: 0.75, sm: 1.5 },
+          mb: { xs: 0.75, sm: 2 },
           mx: "auto",
           display: "block",
           fontFamily: "Fraunces, serif",
