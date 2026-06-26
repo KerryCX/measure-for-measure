@@ -115,7 +115,7 @@ const WeightInput = ({ value, onChange, onError }: WeightInputProps) => {
           onBlur={handlePrimaryBlur}
           onKeyDown={handlePrimaryKeyDown}
           size='small'
-          sx={{ maxWidth: 100 }}
+          sx={{ maxWidth: 120 }}
           slotProps={{
             input: {
               endAdornment: (
@@ -133,7 +133,7 @@ const WeightInput = ({ value, onChange, onError }: WeightInputProps) => {
             onBlur={handleSecondaryBlur}
             onKeyDown={handleSecondaryKeyDown}
             size='small'
-            sx={{ maxWidth: 100 }}
+            sx={{ maxWidth: 120 }}
             slotProps={{
               input: {
                 endAdornment: (
