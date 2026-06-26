@@ -4,16 +4,18 @@ import Typography from "@mui/material/Typography";
 interface MeasureCardProps {
   label: string;
   children: React.ReactNode;
+  background: string;
 }
 
-const MeasureCard = ({ label, children }: MeasureCardProps) => {
+const MeasureCard = ({ label, children, background }: MeasureCardProps) => {
   return (
     <Box
       sx={{
-        background: "linear-gradient(135deg, #F5D020, #F5A623, #F0652A)",
-        borderRadius: 2,
-        padding: 3,
-        mb: 3,
+        background,
+        borderRadius: 3,
+        padding: { xs: 1.5, sm: 3 },
+        mb: { xs: 1, sm: 3 },
+        boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
       }}
     >
       <Typography

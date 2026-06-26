@@ -18,6 +18,15 @@ const theme = createTheme({
     fontFamily: "Inter, sans-serif",
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          border: "20px solid #F0652A",
+          minHeight: "100vh",
+          boxSizing: "border-box",
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         h4: {
@@ -25,6 +34,9 @@ const theme = createTheme({
           fontWeight: 700,
           fontSize: "2rem",
           textAlign: "center",
+          "@media (max-width: 600px)": {
+            fontSize: "1.5rem",
+          },
         },
       },
     },
@@ -34,6 +46,7 @@ const theme = createTheme({
           borderRadius: "999px !important",
           textTransform: "none",
           fontWeight: 600,
+          padding: "4px 12px",
           "&.Mui-selected": {
             background: "#C04A1A",
             color: "#FFFFFF",

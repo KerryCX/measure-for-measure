@@ -11,11 +11,15 @@ interface BMIResultProps {
 }
 
 const cardSx = {
-  background: "linear-gradient(135deg, #F5D020, #F5A623, #F0652A)",
+  background: "#F5D020",
   borderRadius: 3,
-  padding: 3,
-  mt: 1,
+  padding: { xs: 1.5, sm: 3 },
   textAlign: "center",
+  mt: { xs: 1, sm: 2 },
+  maxWidth: 280,
+  mx: "auto",
+  pb: 2,
+  boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
 };
 
 const BMIResult = ({ result }: BMIResultProps) => {
@@ -39,6 +43,7 @@ const BMIResult = ({ result }: BMIResultProps) => {
           fontFamily: "Fraunces, serif",
           fontWeight: 700,
           color: "#2D1A00",
+          fontSize: { xs: "2.5rem", sm: "3rem" },
         }}
       >
         {result.value}
@@ -61,7 +66,11 @@ const BMIResult = ({ result }: BMIResultProps) => {
       {showCategory && (
         <Typography
           variant='body1'
-          sx={{ mt: 1, color: "#2D1A00", fontWeight: 600 }}
+          sx={{
+            mt: 1,
+            color: "#2D1A00",
+            fontWeight: 600,
+          }}
         >
           {BMI_CATEGORIES[result.category].label}
         </Typography>

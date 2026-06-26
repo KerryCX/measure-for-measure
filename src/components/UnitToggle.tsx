@@ -34,13 +34,14 @@ const UnitToggle = <T extends string>({
         flexWrap: "wrap",
         width: "100%",
         gap: "8px",
+        justifyContent: "center",
       }}
     >
       {options.map((option) => (
         <Tooltip key={option.value} title={option.tooltip} arrow>
           <ToggleButton
             value={option.value}
-            sx={{ flex: "1 1 calc(50% - 8px)", minWidth: 0 }}
+            sx={{ flex: "0 1 auto", minWidth: 0 }}
           >
             {option.label}
           </ToggleButton>
