@@ -117,7 +117,7 @@ const HeightInput = ({ value, onChange, onError }: HeightInputProps) => {
           onBlur={handlePrimaryBlur}
           onKeyDown={handlePrimaryKeyDown}
           size='small'
-          sx={{ maxWidth: 120 }}
+          sx={{ width: 150 }}
           slotProps={{
             input: {
               endAdornment: (
@@ -135,7 +135,7 @@ const HeightInput = ({ value, onChange, onError }: HeightInputProps) => {
             onBlur={handleSecondaryBlur}
             onKeyDown={handleSecondaryKeyDown}
             size='small'
-            sx={{ maxWidth: 120 }}
+            sx={{ width: 150 }}
             slotProps={{
               input: {
                 endAdornment: (
