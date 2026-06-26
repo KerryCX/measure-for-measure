@@ -71,7 +71,7 @@ const App = () => {
     buttonLabel === "Reset" ? handleReset : handleSubmit;
 
   return (
-    <Container maxWidth='sm' component='main' sx={{ py: 4 }}>
+    <Container maxWidth='sm' component='main' sx={{ py: { xs: 2, sm: 4 } }}>
       <Typography variant='h4' gutterBottom>
         Measure for Measure
       </Typography>
@@ -110,6 +110,7 @@ const App = () => {
             background: "linear-gradient(135deg, #E8C31A, #E89B1A, #D85A24)",
             boxShadow: "none",
           },
+          textTransform: "none",
         }}
       >
         {buttonLabel}
