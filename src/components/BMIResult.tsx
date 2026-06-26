@@ -14,8 +14,8 @@ const cardSx = {
   background: "linear-gradient(135deg, #F5D020, #F5A623, #F0652A)",
   borderRadius: 3,
   padding: 3,
-  mt: 1,
   textAlign: "center",
+  mt: { xs: 1, sm: 2 },
 };
 
 const BMIResult = ({ result }: BMIResultProps) => {

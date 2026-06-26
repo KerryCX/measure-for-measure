@@ -99,10 +99,13 @@ const App = () => {
         sx={{
           background: "linear-gradient(135deg, #F5D020, #F5A623, #F0652A)",
           color: "#2D1A00",
+          maxWidth: 280,
           fontWeight: 700,
           borderRadius: "999px",
           py: 1.5,
           mb: 2,
+          mx: "auto",
+          display: "block",
           fontFamily: "Fraunces, serif",
           fontSize: "1.1rem",
           boxShadow: "none",
