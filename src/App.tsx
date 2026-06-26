@@ -71,12 +71,20 @@ const App = () => {
     buttonLabel === "Reset" ? handleReset : handleSubmit;
 
   return (
-    <Container maxWidth='sm' component='main' sx={{ py: { xs: 2, sm: 4 } }}>
+    <Container
+      maxWidth='sm'
+      component='main'
+      sx={{
+        py: { xs: 1, sm: 4 },
+        borderRadius: 4,
+        mt: 2,
+      }}
+    >
       <Typography variant='h4' gutterBottom>
         Measure for Measure
       </Typography>
 
-      <MeasureCard label='Height'>
+      <MeasureCard label='Height' background='#F0652A'>
         <HeightInput
           value={height}
           onChange={handleHeightChange}
@@ -84,7 +92,7 @@ const App = () => {
         />
       </MeasureCard>
 
-      <MeasureCard label='Weight'>
+      <MeasureCard label='Weight' background='#F5A623'>
         <WeightInput
           value={weight}
           onChange={handleWeightChange}
@@ -97,8 +105,10 @@ const App = () => {
         fullWidth
         onClick={handleButtonClick}
         sx={{
-          background: "linear-gradient(135deg, #F5D020, #F5A623, #F0652A)",
-          color: "#2D1A00",
+          background: "#FFFFFF",
+          color: "#7A2E0E",
+          border: "2px solid #7A2E0E",
+          fontSize: "1.2rem",
           maxWidth: 280,
           fontWeight: 700,
           borderRadius: "999px",
@@ -107,11 +117,10 @@ const App = () => {
           mx: "auto",
           display: "block",
           fontFamily: "Fraunces, serif",
-          fontSize: "1.1rem",
-          boxShadow: "none",
+          boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
           "&:hover": {
-            background: "linear-gradient(135deg, #E8C31A, #E89B1A, #D85A24)",
-            boxShadow: "none",
+            background: "#FFF5F0",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
           },
           textTransform: "none",
         }}
