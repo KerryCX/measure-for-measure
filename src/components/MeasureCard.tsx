@@ -13,8 +13,8 @@ const MeasureCard = ({ label, children, background }: MeasureCardProps) => {
       sx={{
         background,
         borderRadius: 3,
-        padding: { xs: 1.5, sm: 3 },
-        mb: { xs: 1, sm: 3 },
+        padding: { xs: 0.75, sm: 3 },
+        mb: { xs: 0.75, sm: 3 },
         boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
       }}
     >
