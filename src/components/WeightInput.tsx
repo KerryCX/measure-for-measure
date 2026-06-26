@@ -107,7 +107,15 @@ const WeightInput = ({ value, onChange, onError }: WeightInputProps) => {
         options={WEIGHT_OPTIONS}
         onChange={handleUnitChange}
       />
-      <Box sx={{ display: "flex", gap: 2, mt: 2, justifyContent: "center" }}>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 2,
+          mt: 2,
+          justifyContent: "center",
+          py: { xs: 0.75, sm: 4 },
+        }}
+      >
         <TextField
           type='number'
           value={value.primary || ""}
@@ -133,7 +141,7 @@ const WeightInput = ({ value, onChange, onError }: WeightInputProps) => {
             onBlur={handleSecondaryBlur}
             onKeyDown={handleSecondaryKeyDown}
             size='small'
-            sx={{ width: 150 }}
+            sx={{ width: 150, py: { xs: 0.75, sm: 4 } }}
             slotProps={{
               input: {
                 endAdornment: (
