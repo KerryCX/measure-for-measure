@@ -25,6 +25,9 @@ const theme = createTheme({
           fontWeight: 700,
           fontSize: "2rem",
           textAlign: "center",
+          "@media (max-width: 600px)": {
+            fontSize: "1.5rem",
+          },
         },
       },
     },

@@ -11,9 +11,9 @@ const MeasureCard = ({ label, children }: MeasureCardProps) => {
     <Box
       sx={{
         background: "linear-gradient(135deg, #F5D020, #F5A623, #F0652A)",
-        borderRadius: 2,
-        padding: 3,
-        mb: 3,
+        borderRadius: 3,
+        padding: { xs: 2, sm: 3 },
+        mb: { xs: 1.5, sm: 3 },
       }}
     >
       <Typography
