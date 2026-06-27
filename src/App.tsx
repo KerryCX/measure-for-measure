@@ -84,7 +84,11 @@ const App = () => {
         Measure for Measure
       </Typography>
 
-      <MeasureCard label='Height' background='#F0652A'>
+      <MeasureCard
+        label='Height'
+        background='#F0652A'
+        boxShadow='0 8px 16px rgba(0,0,0,0.2)'
+      >
         <HeightInput
           value={height}
           onChange={handleHeightChange}
@@ -92,7 +96,11 @@ const App = () => {
         />
       </MeasureCard>
 
-      <MeasureCard label='Weight' background='#F5A623'>
+      <MeasureCard
+        label='Weight'
+        background='#F5A623'
+        boxShadow='0 8px 16px rgba(0,0,0,0.2)'
+      >
         <WeightInput
           value={weight}
           onChange={handleWeightChange}
@@ -117,10 +125,10 @@ const App = () => {
           mx: "auto",
           display: "block",
           fontFamily: "Fraunces, serif",
-          boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
+          boxShadow: "0 8px 16px rgba(0,0,0,0.2)",
           "&:hover": {
             background: "#FFF5F0",
-            boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
+            boxShadow: "0 8px 16px rgba(0,0,0,0.5)",
           },
           textTransform: "none",
         }}
