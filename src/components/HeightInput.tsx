@@ -1,19 +1,17 @@
-import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import InputAdornment from "@mui/material/InputAdornment";
 import UnitToggle from "./UnitToggle";
-import type { HeightUnit, HeightValue } from "../types";
+import UnitInput from "./UnitInput";
+import type {
+  HeightUnit,
+  HeightValue,
+  SingleLimit,
+  DoubleLimit,
+} from "../types";
 import { convertCmToHeight, convertHeightToCm } from "../utils";
-
-interface HeightInputProps {
-  value: HeightValue;
-  onChange: (value: HeightValue) => void;
-  onError: (message: string) => void;
-}
 
 const HEIGHT_OPTIONS = [
   { value: "cm" as HeightUnit, label: "Centimetres", tooltip: "e.g. 150 cm" },
-  { value: "m" as HeightUnit, label: "Metres", tooltip: "Metres (e.g. 1.6 m)" },
+  { value: "m" as HeightUnit, label: "Metres", tooltip: "e.g. 1.6 m" },
   {
     value: "m+cm" as HeightUnit,
     label: "Metres & centimetres",
@@ -26,14 +24,6 @@ const HEIGHT_OPTIONS = [
   },
 ];
 
-type SingleLimit = { min: number; max: number };
-type DoubleLimit = {
-  primaryMin: number;
-  primaryMax: number;
-  secondaryMin: number;
-  secondaryMax: number;
-};
-
 const HEIGHT_LIMITS: Record<HeightUnit, SingleLimit | DoubleLimit> = {
   cm: { min: 50, max: 300 },
   m: { min: 0.5, max: 3 },
@@ -41,7 +31,37 @@ const HEIGHT_LIMITS: Record<HeightUnit, SingleLimit | DoubleLimit> = {
   "ft+in": { primaryMin: 1, primaryMax: 9, secondaryMin: 0, secondaryMax: 11 },
 };
 
+interface HeightInputProps {
+  value: HeightValue;
+  onChange: (value: HeightValue) => void;
+  onError: (message: string) => void;
+}
+
+/**
+ * Height input with unit toggle and one or two number fields.
+ * Converts the current value to cm before switching units so the
+ * number stays consistent across unit changes.
+ */
 const HeightInput = ({ value, onChange, onError }: HeightInputProps) => {
+  const isDouble = value.unit === "m+cm" || value.unit === "ft+in";
+  const primaryLabel =
+    value.unit === "ft+in" ? "ft" : value.unit === "m+cm" ? "m" : value.unit;
+  const secondaryLabel = value.unit === "ft+in" ? "in" : "cm";
+
+  const limits = HEIGHT_LIMITS[value.unit];
+  const primaryMin = isDouble
+    ? (limits as DoubleLimit).primaryMin
+    : (limits as SingleLimit).min;
+  const primaryMax = isDouble
+    ? (limits as DoubleLimit).primaryMax
+    : (limits as SingleLimit).max;
+  const secondaryMin = isDouble ? (limits as DoubleLimit).secondaryMin : 0;
+  const secondaryMax = isDouble ? (limits as DoubleLimit).secondaryMax : 0;
+
+  /**
+   * Converts the current value to cm, then back to the new unit
+   * so the displayed number stays consistent across unit changes.
+   */
   const handleUnitChange = (newUnit: HeightUnit) => {
     const cm = convertHeightToCm(value);
     const converted = convertCmToHeight(cm, newUnit);
@@ -63,6 +83,15 @@ const HeightInput = ({ value, onChange, onError }: HeightInputProps) => {
     }
   };
 
+  const handlePrimaryKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") handlePrimaryBlur();
+  };
+
+  const handleSecondaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const parsed = parseFloat(e.target.value);
+    onChange({ ...value, secondary: isNaN(parsed) ? 0 : parsed });
+  };
+
   const handleSecondaryBlur = () => {
     if (!value.secondary) return;
     if (value.secondary < secondaryMin || value.secondary > secondaryMax) {
@@ -73,33 +102,9 @@ const HeightInput = ({ value, onChange, onError }: HeightInputProps) => {
     }
   };
 
-  const handleSecondaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const parsed = parseFloat(e.target.value);
-    onChange({ ...value, secondary: isNaN(parsed) ? 0 : parsed });
-  };
-
-  const handlePrimaryKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") handlePrimaryBlur();
-  };
-
   const handleSecondaryKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") handleSecondaryBlur();
   };
-
-  const isDouble = value.unit === "m+cm" || value.unit === "ft+in";
-  const primaryLabel =
-    value.unit === "ft+in" ? "ft" : value.unit === "m+cm" ? "m" : value.unit;
-  const secondaryLabel = value.unit === "ft+in" ? "in" : "cm";
-
-  const limits = HEIGHT_LIMITS[value.unit];
-  const primaryMin = isDouble
-    ? (limits as DoubleLimit).primaryMin
-    : (limits as SingleLimit).min;
-  const primaryMax = isDouble
-    ? (limits as DoubleLimit).primaryMax
-    : (limits as SingleLimit).max;
-  const secondaryMin = isDouble ? (limits as DoubleLimit).secondaryMin : 0;
-  const secondaryMax = isDouble ? (limits as DoubleLimit).secondaryMax : 0;
 
   return (
     <Box>
@@ -109,59 +114,23 @@ const HeightInput = ({ value, onChange, onError }: HeightInputProps) => {
         options={HEIGHT_OPTIONS}
         onChange={handleUnitChange}
       />
-      <Box sx={{ display: "flex", mt: 2, mb: 1, justifyContent: "center" }}>
-        <TextField
-          type='number'
-          value={value.primary || ""}
-          onChange={handlePrimaryChange}
-          onBlur={handlePrimaryBlur}
-          onKeyDown={handlePrimaryKeyDown}
-          size='small'
-          sx={{
-            width: { xs: 100, sm: 150 },
-            "& .MuiOutlinedInput-root": {
-              borderRadius: isDouble ? "999px 0 0 999px" : "999px",
-            },
-            "& .MuiOutlinedInput-notchedOutline": {
-              borderRight: isDouble ? "none" : undefined,
-            },
-          }}
-          slotProps={{
-            input: {
-              endAdornment: (
-                <InputAdornment position='end'>{primaryLabel}</InputAdornment>
-              ),
-              inputProps: { min: primaryMin, max: primaryMax },
-            },
-          }}
-        />
-        {isDouble && (
-          <TextField
-            type='number'
-            value={value.secondary || ""}
-            onChange={handleSecondaryChange}
-            onBlur={handleSecondaryBlur}
-            onKeyDown={handleSecondaryKeyDown}
-            size='small'
-            sx={{
-              width: { xs: 100, sm: 150 },
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "0 999px 999px 0",
-              },
-            }}
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    {secondaryLabel}
-                  </InputAdornment>
-                ),
-                inputProps: { min: secondaryMin, max: secondaryMax },
-              },
-            }}
-          />
-        )}
-      </Box>
+      <UnitInput
+        primaryValue={value.primary}
+        primaryLabel={primaryLabel}
+        primaryMin={primaryMin}
+        primaryMax={primaryMax}
+        onPrimaryChange={handlePrimaryChange}
+        onPrimaryBlur={handlePrimaryBlur}
+        onPrimaryKeyDown={handlePrimaryKeyDown}
+        isDouble={isDouble}
+        secondaryValue={value.secondary}
+        secondaryLabel={secondaryLabel}
+        secondaryMin={secondaryMin}
+        secondaryMax={secondaryMax}
+        onSecondaryChange={handleSecondaryChange}
+        onSecondaryBlur={handleSecondaryBlur}
+        onSecondaryKeyDown={handleSecondaryKeyDown}
+      />
     </Box>
   );
 };
