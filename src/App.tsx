@@ -75,7 +75,7 @@ const App = () => {
       maxWidth='sm'
       component='main'
       sx={{
-        py: { xs: 0.75, sm: 4 },
+        padding: { xs: 0.75, sm: 4 },
         borderRadius: 4,
         mt: 2,
       }}
