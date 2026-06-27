@@ -109,7 +109,7 @@ const HeightInput = ({ value, onChange, onError }: HeightInputProps) => {
         options={HEIGHT_OPTIONS}
         onChange={handleUnitChange}
       />
-      <Box sx={{ display: "flex", gap: 2, mt: 2, justifyContent: "center" }}>
+      <Box sx={{ display: "flex", mt: 2, mb: 1, justifyContent: "center" }}>
         <TextField
           type='number'
           value={value.primary || ""}
@@ -117,7 +117,15 @@ const HeightInput = ({ value, onChange, onError }: HeightInputProps) => {
           onBlur={handlePrimaryBlur}
           onKeyDown={handlePrimaryKeyDown}
           size='small'
-          sx={{ width: 150 }}
+          sx={{
+            width: { xs: 100, sm: 150 },
+            "& .MuiOutlinedInput-root": {
+              borderRadius: isDouble ? "999px 0 0 999px" : "999px",
+            },
+            "& .MuiOutlinedInput-notchedOutline": {
+              borderRight: isDouble ? "none" : undefined,
+            },
+          }}
           slotProps={{
             input: {
               endAdornment: (
@@ -135,7 +143,12 @@ const HeightInput = ({ value, onChange, onError }: HeightInputProps) => {
             onBlur={handleSecondaryBlur}
             onKeyDown={handleSecondaryKeyDown}
             size='small'
-            sx={{ width: 150 }}
+            sx={{
+              width: { xs: 100, sm: 150 },
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "0 999px 999px 0",
+              },
+            }}
             slotProps={{
               input: {
                 endAdornment: (

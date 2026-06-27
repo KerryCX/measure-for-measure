@@ -5,17 +5,23 @@ interface MeasureCardProps {
   label: string;
   children: React.ReactNode;
   background: string;
+  boxShadow: string;
 }
 
-const MeasureCard = ({ label, children, background }: MeasureCardProps) => {
+const MeasureCard = ({
+  label,
+  children,
+  background,
+  boxShadow,
+}: MeasureCardProps) => {
   return (
     <Box
       sx={{
         background,
-        borderRadius: 3,
-        padding: { xs: 0.75, sm: 3 },
+        borderRadius: 1.5,
+        padding: { xs: 1, sm: 3 },
         mb: { xs: 0.75, sm: 3 },
-        boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
+        boxShadow,
       }}
     >
       <Typography

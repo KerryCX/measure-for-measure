@@ -107,15 +107,7 @@ const WeightInput = ({ value, onChange, onError }: WeightInputProps) => {
         options={WEIGHT_OPTIONS}
         onChange={handleUnitChange}
       />
-      <Box
-        sx={{
-          display: "flex",
-          gap: 2,
-          mt: 2,
-          justifyContent: "center",
-          py: { xs: 0.75, sm: 4 },
-        }}
-      >
+      <Box sx={{ display: "flex", mt: 2, mb: 1, justifyContent: "center" }}>
         <TextField
           type='number'
           value={value.primary || ""}
@@ -123,7 +115,15 @@ const WeightInput = ({ value, onChange, onError }: WeightInputProps) => {
           onBlur={handlePrimaryBlur}
           onKeyDown={handlePrimaryKeyDown}
           size='small'
-          sx={{ width: 150 }}
+          sx={{
+            width: { xs: 100, sm: 150 },
+            "& .MuiOutlinedInput-root": {
+              borderRadius: isDouble ? "999px 0 0 999px" : "999px",
+            },
+            "& .MuiOutlinedInput-notchedOutline": {
+              borderRight: isDouble ? "none" : undefined,
+            },
+          }}
           slotProps={{
             input: {
               endAdornment: (
@@ -141,7 +141,12 @@ const WeightInput = ({ value, onChange, onError }: WeightInputProps) => {
             onBlur={handleSecondaryBlur}
             onKeyDown={handleSecondaryKeyDown}
             size='small'
-            sx={{ width: 150, py: { xs: 0.75, sm: 4 } }}
+            sx={{
+              width: { xs: 100, sm: 150 },
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "0 999px 999px 0",
+              },
+            }}
             slotProps={{
               input: {
                 endAdornment: (

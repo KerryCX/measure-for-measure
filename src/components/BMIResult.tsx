@@ -12,14 +12,14 @@ interface BMIResultProps {
 
 const cardSx = {
   background: "#F5D020",
-  borderRadius: 3,
+  borderRadius: 1.5,
   padding: { xs: 0.75, sm: 3 },
   textAlign: "center",
   mt: { xs: 1, sm: 2 },
   maxWidth: 280,
   mx: "auto",
   pb: 2,
-  boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
+  boxShadow: "0 8px 16px rgba(0,0,0,0.2)",
 };
 
 const BMIResult = ({ result }: BMIResultProps) => {
