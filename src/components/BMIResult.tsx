@@ -1,7 +1,8 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { BMI_CATEGORIES } from "../constants";
 import type { BMIResult as BMIResultType } from "../types";
@@ -54,29 +55,49 @@ const BMIResult = ({ result }: BMIResultProps) => {
       >
         BMI
       </Typography>
-      <FormControlLabel
-        control={
-          <Switch
-            checked={showCategory}
-            onChange={(e) => setShowCategory(e.target.checked)}
-            size='small'
-            slotProps={{ input: { "aria-checked": showCategory } }}
-          />
-        }
-        label='Show category'
-        sx={{ color: "#2D1A00" }}
-      />
-      {showCategory && (
-        <Typography
-          variant='body1'
+
+      {!showCategory ? (
+        <Button
+          onClick={() => setShowCategory(true)}
+          variant='outlined'
+          size='small'
           sx={{
-            mt: 1,
             color: "#2D1A00",
-            fontWeight: 600,
+            borderColor: "#2D1A00",
+            textTransform: "none",
+            "&:hover": {
+              borderColor: "#2D1A00",
+              background: "rgba(0,0,0,0.05)",
+            },
           }}
         >
-          {BMI_CATEGORIES[result.category].label}
-        </Typography>
+          Show category
+        </Button>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 0.5,
+            mt: 1,
+          }}
+        >
+          <Typography
+            variant='body1'
+            sx={{ color: "#2D1A00", fontWeight: 600 }}
+          >
+            {BMI_CATEGORIES[result.category].label}
+          </Typography>
+          <IconButton
+            onClick={() => setShowCategory(false)}
+            aria-label='Hide category'
+            size='small'
+            sx={{ color: "#2D1A00" }}
+          >
+            <CloseIcon fontSize='small' />
+          </IconButton>
+        </Box>
       )}
     </Box>
   );
