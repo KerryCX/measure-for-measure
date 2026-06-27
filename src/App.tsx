@@ -1,6 +1,7 @@
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import Snackbar from "@mui/material/Snackbar";
 import HeightInput from "./components/HeightInput";
 import WeightInput from "./components/WeightInput";
@@ -30,7 +31,7 @@ const App = () => {
 
   return (
     <Container
-      maxWidth='sm'
+      maxWidth='md'
       component='main'
       sx={{
         padding: { xs: 0.75, sm: 4 },
@@ -42,29 +43,39 @@ const App = () => {
         Measure for Measure
       </Typography>
 
-      <MeasureCard
-        label='Height'
-        background='#F0652A'
-        boxShadow='0 8px 16px rgba(0,0,0,0.2)'
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          gap: { md: 2 },
+        }}
       >
-        <HeightInput
-          value={height}
-          onChange={handleHeightChange}
-          onError={reportError}
-        />
-      </MeasureCard>
+        <MeasureCard
+          label='Height'
+          background='#F0652A'
+          boxShadow='0 8px 16px rgba(0,0,0,0.2)'
+          sx={{ flex: 1 }}
+        >
+          <HeightInput
+            value={height}
+            onChange={handleHeightChange}
+            onError={reportError}
+          />
+        </MeasureCard>
 
-      <MeasureCard
-        label='Weight'
-        background='#F5A623'
-        boxShadow='0 8px 16px rgba(0,0,0,0.2)'
-      >
-        <WeightInput
-          value={weight}
-          onChange={handleWeightChange}
-          onError={reportError}
-        />
-      </MeasureCard>
+        <MeasureCard
+          label='Weight'
+          background='#F5A623'
+          boxShadow='0 8px 16px rgba(0,0,0,0.2)'
+          sx={{ flex: 1 }}
+        >
+          <WeightInput
+            value={weight}
+            onChange={handleWeightChange}
+            onError={reportError}
+          />
+        </MeasureCard>
+      </Box>
 
       <Button
         variant='contained'
@@ -74,7 +85,7 @@ const App = () => {
           color: "#7A2E0E",
           border: "2px solid #7A2E0E",
           fontSize: "1.2rem",
-          width: "auto",
+          width: { xs: "auto", md: 400 },
           fontWeight: 700,
           borderRadius: "999px",
           py: { xs: 0.75, sm: 1.5 },
