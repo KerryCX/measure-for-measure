@@ -24,16 +24,22 @@ describe("BMIResult", () => {
     expect(screen.queryByText("Normal weight")).not.toBeInTheDocument();
   });
 
-  it("shows category when toggle is switched on", async () => {
+  it("shows category when Show category is clicked", async () => {
     render(<BMIResult result={normalResult} />);
-    await userEvent.click(screen.getByRole("switch"));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Show category" }),
+    );
     expect(screen.getByText("Normal weight")).toBeInTheDocument();
   });
 
-  it("hides category when toggle is switched off again", async () => {
+  it("hides category when dismiss button is clicked", async () => {
     render(<BMIResult result={normalResult} />);
-    await userEvent.click(screen.getByRole("switch"));
-    await userEvent.click(screen.getByRole("switch"));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Show category" }),
+    );
+    await userEvent.click(
+      screen.getByRole("button", { name: "Hide category" }),
+    );
     expect(screen.queryByText("Normal weight")).not.toBeInTheDocument();
   });
 });
