@@ -1,9 +1,13 @@
-import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import UnitToggle from "./UnitToggle";
-import type { WeightUnit, WeightValue } from "../types";
+import UnitInput from "./UnitInput";
+import type {
+  WeightUnit,
+  WeightValue,
+  SingleLimit,
+  DoubleLimit,
+} from "../types";
 import { convertKgToWeight, convertWeightToKg } from "../utils";
-import InputAdornment from "@mui/material/InputAdornment";
 
 const WEIGHT_OPTIONS = [
   { value: "kg" as WeightUnit, label: "Kilograms", tooltip: "e.g. 65 kg" },
@@ -11,17 +15,9 @@ const WEIGHT_OPTIONS = [
   {
     value: "st+lbs" as WeightUnit,
     label: "Stone & Pounds",
-    tooltip: "e.g. 9 st 4lbs",
+    tooltip: "e.g. 9 st 4 lbs",
   },
 ];
-
-type SingleLimit = { min: number; max: number };
-type DoubleLimit = {
-  primaryMin: number;
-  primaryMax: number;
-  secondaryMin: number;
-  secondaryMax: number;
-};
 
 const WEIGHT_LIMITS: Record<WeightUnit, SingleLimit | DoubleLimit> = {
   kg: { min: 10, max: 500 },
@@ -40,7 +36,30 @@ interface WeightInputProps {
   onError: (message: string) => void;
 }
 
+/**
+ * Weight input with unit toggle and one or two number fields.
+ * Converts the current value to kg before switching units so the
+ * number stays consistent across unit changes.
+ */
 const WeightInput = ({ value, onChange, onError }: WeightInputProps) => {
+  const isDouble = value.unit === "st+lbs";
+  const primaryLabel = value.unit === "st+lbs" ? "st" : value.unit;
+  const secondaryLabel = "lbs";
+
+  const limits = WEIGHT_LIMITS[value.unit];
+  const primaryMin = isDouble
+    ? (limits as DoubleLimit).primaryMin
+    : (limits as SingleLimit).min;
+  const primaryMax = isDouble
+    ? (limits as DoubleLimit).primaryMax
+    : (limits as SingleLimit).max;
+  const secondaryMin = isDouble ? (limits as DoubleLimit).secondaryMin : 0;
+  const secondaryMax = isDouble ? (limits as DoubleLimit).secondaryMax : 0;
+
+  /**
+   * Converts the current value to kg, then back to the new unit
+   * so the displayed number stays consistent across unit changes.
+   */
   const handleUnitChange = (newUnit: WeightUnit) => {
     const kg = convertWeightToKg(value);
     const converted = convertKgToWeight(kg, newUnit);
@@ -62,6 +81,15 @@ const WeightInput = ({ value, onChange, onError }: WeightInputProps) => {
     }
   };
 
+  const handlePrimaryKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") handlePrimaryBlur();
+  };
+
+  const handleSecondaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const parsed = parseFloat(e.target.value);
+    onChange({ ...value, secondary: isNaN(parsed) ? 0 : parsed });
+  };
+
   const handleSecondaryBlur = () => {
     if (!value.secondary) return;
     if (value.secondary < secondaryMin || value.secondary > secondaryMax) {
@@ -72,32 +100,9 @@ const WeightInput = ({ value, onChange, onError }: WeightInputProps) => {
     }
   };
 
-  const handleSecondaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const parsed = parseFloat(e.target.value);
-    onChange({ ...value, secondary: isNaN(parsed) ? 0 : parsed });
-  };
-
-  const handlePrimaryKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") handlePrimaryBlur();
-  };
-
   const handleSecondaryKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") handleSecondaryBlur();
   };
-
-  const isDouble = value.unit === "st+lbs";
-  const primaryLabel = value.unit === "st+lbs" ? "st" : value.unit;
-  const secondaryLabel = "lbs";
-
-  const limits = WEIGHT_LIMITS[value.unit];
-  const primaryMin = isDouble
-    ? (limits as DoubleLimit).primaryMin
-    : (limits as SingleLimit).min;
-  const primaryMax = isDouble
-    ? (limits as DoubleLimit).primaryMax
-    : (limits as SingleLimit).max;
-  const secondaryMin = isDouble ? (limits as DoubleLimit).secondaryMin : 0;
-  const secondaryMax = isDouble ? (limits as DoubleLimit).secondaryMax : 0;
 
   return (
     <Box>
@@ -107,59 +112,23 @@ const WeightInput = ({ value, onChange, onError }: WeightInputProps) => {
         options={WEIGHT_OPTIONS}
         onChange={handleUnitChange}
       />
-      <Box sx={{ display: "flex", mt: 2, mb: 1, justifyContent: "center" }}>
-        <TextField
-          type='number'
-          value={value.primary || ""}
-          onChange={handlePrimaryChange}
-          onBlur={handlePrimaryBlur}
-          onKeyDown={handlePrimaryKeyDown}
-          size='small'
-          sx={{
-            width: { xs: 100, sm: 150 },
-            "& .MuiOutlinedInput-root": {
-              borderRadius: isDouble ? "999px 0 0 999px" : "999px",
-            },
-            "& .MuiOutlinedInput-notchedOutline": {
-              borderRight: isDouble ? "none" : undefined,
-            },
-          }}
-          slotProps={{
-            input: {
-              endAdornment: (
-                <InputAdornment position='end'>{primaryLabel}</InputAdornment>
-              ),
-              inputProps: { min: primaryMin, max: primaryMax },
-            },
-          }}
-        />
-        {isDouble && (
-          <TextField
-            type='number'
-            value={value.secondary || ""}
-            onChange={handleSecondaryChange}
-            onBlur={handleSecondaryBlur}
-            onKeyDown={handleSecondaryKeyDown}
-            size='small'
-            sx={{
-              width: { xs: 100, sm: 150 },
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "0 999px 999px 0",
-              },
-            }}
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    {secondaryLabel}
-                  </InputAdornment>
-                ),
-                inputProps: { min: secondaryMin, max: secondaryMax },
-              },
-            }}
-          />
-        )}
-      </Box>
+      <UnitInput
+        primaryValue={value.primary}
+        primaryLabel={primaryLabel}
+        primaryMin={primaryMin}
+        primaryMax={primaryMax}
+        onPrimaryChange={handlePrimaryChange}
+        onPrimaryBlur={handlePrimaryBlur}
+        onPrimaryKeyDown={handlePrimaryKeyDown}
+        isDouble={isDouble}
+        secondaryValue={value.secondary}
+        secondaryLabel={secondaryLabel}
+        secondaryMin={secondaryMin}
+        secondaryMax={secondaryMax}
+        onSecondaryChange={handleSecondaryChange}
+        onSecondaryBlur={handleSecondaryBlur}
+        onSecondaryKeyDown={handleSecondaryKeyDown}
+      />
     </Box>
   );
 };

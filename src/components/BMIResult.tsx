@@ -11,6 +11,7 @@ interface BMIResultProps {
   result: BMIResultType | null;
 }
 
+// Shared card styles for both the null state and result state
 const cardSx = {
   background: "#F5D020",
   borderRadius: 1.5,
@@ -23,6 +24,11 @@ const cardSx = {
   boxShadow: "0 8px 16px rgba(0,0,0,0.2)",
 };
 
+/**
+ * Displays the calculated BMI value on a yellow card.
+ * When result is null shows a prompt instead.
+ * Category is hidden by default behind a show/dismiss button pattern.
+ */
 const BMIResult = ({ result }: BMIResultProps) => {
   const [showCategory, setShowCategory] = useState(false);
 
