@@ -6,6 +6,7 @@ interface MeasureCardProps {
   children: React.ReactNode;
   background: string;
   boxShadow: string;
+  sx?: object;
 }
 
 const MeasureCard = ({
@@ -13,6 +14,7 @@ const MeasureCard = ({
   children,
   background,
   boxShadow,
+  sx,
 }: MeasureCardProps) => {
   return (
     <Box
@@ -22,6 +24,7 @@ const MeasureCard = ({
         padding: { xs: 1, sm: 3 },
         mb: { xs: 0.75, sm: 3 },
         boxShadow,
+        ...sx,
       }}
     >
       <Typography
