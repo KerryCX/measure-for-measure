@@ -1,75 +1,48 @@
-# React + TypeScript + Vite
+# Measure for Measure
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A BMI calculator that lets you choose height and weight units independently.
+Built with React, TypeScript, and Material UI v6.
 
-Currently, two official plugins are available:
+Live: [measureformeasure.kerryclements.com](https://measureformeasure.kerryclements.com)  
+Also at: [bmi.kerryclements.com](https://bmi.kerryclements.com) · [measure4measure.kerryclements.com](https://measure4measure.kerryclements.com)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Stack
 
-## React Compiler
+- React + TypeScript
+- Vite v7 (pinned — Vite v8 incompatible with Vitest at time of build)
+- Material UI v6
+- Vitest + React Testing Library
+- Netlify
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- Independent height and weight unit selection
+- Supported height units: cm, m, m + cm, ft + in
+- Supported weight units: kg, lbs, st + lbs
+- Live unit conversion - switching units preserves your value
+- Input validation with range checking
+- Show/dismiss BMI category pattern
+- Responsive: mobile-first (390px), side-by-side cards at md breakpoint
+- WCAG 2.2 AA — Stark audit: 90%, 0 violations
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tests
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+109 tests across 8 files covering utility functions, validation,
+conversion logic, and all components.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npx vitest run
+npx vitest run --coverage
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Dev
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm run dev
 ```
+
+## Workflow
+
+Feature branch → `dev` → `main` via PR  
+Branch protection and CI on both `dev` and `main`
