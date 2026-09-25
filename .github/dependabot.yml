@@ -5,3 +5,19 @@ updates:
     schedule:
       interval: "weekly"
     target-branch: "dev"
+    groups:
+      vite:
+        patterns:
+          - "vite"
+          - "@vitejs/*"
+      vitest:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+      testing:
+        patterns:
+          - "@testing-library/*"
+      eslint:
+        patterns:
+          - "eslint"
+          - "@eslint/*"
